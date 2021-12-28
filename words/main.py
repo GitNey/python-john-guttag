@@ -12,7 +12,8 @@ def remove_newline(word):
 def bisection_search(needle, haystack):
   map = dict(zip(string.ascii_lowercase, range(1, 27)))
   match = False
-  needleIndex = haystack[ haystack.index(needle) ]
+  needle == haystack[ haystack.index(needle) ]
+  needleIndex = haystack.index(needle)
   guessIndex = (len(haystack) - 1) / 2
   guessCounter = 0
   index = 0
@@ -29,6 +30,7 @@ def bisection_search(needle, haystack):
 
     if guess == needle:
       match = True
+      print 'Correct guess:', guess
     else:
       guessCounter += 1
       a = haystack[0:guessIndex]
