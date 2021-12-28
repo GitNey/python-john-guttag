@@ -12,23 +12,42 @@ def remove_newline(word):
 def bisection_search(needle, haystack):
   map = dict(zip(string.ascii_lowercase, range(1, 27)))
   match = False
-  guess = haystack[ haystack.index(needle[0]) ]
+  needleIndex = haystack[ haystack.index(needle) ]
+  guessIndex = (len(haystack) - 1) / 2
   guessCounter = 0
   index = 0
   while (not match):
+    guess = haystack[ guessIndex ]
+
+    # look left or right if only two items remain in search space.
+    if len(haystack) == 2 and guess != needle and guessIndex == 0:
+        guessIndex += 1
+        guess = haystack[guessIndex]
+    elif len(haystack) == 2 and guess != needle and guessIndex == 1:
+        guessIndex -= 1
+        guess = haystack[guessIndex]
+
     if guess == needle:
       match = True
     else:
       guessCounter += 1
-      index = haystack.index(needle[0])
-      haystack = haystack[ index :]
-      try:
-        guess = haystack[ haystack.index(needle[0:guessCounter])]
-      except Exception:
-        pass
+      a = haystack[0:guessIndex]
+      b = haystack[guessIndex:]
+
+      if needle in a:
+        guessIndex = (len(a) - 1) / 2
+        haystack = a
+      else:
+        guessIndex = (len(a) - 1) / 2
+        haystack = b
+
       print 'Current guess: %s' % guess
-  print 'Needle found at index: %d' % index
+      print 'Current haystack size: %d' % len(haystack)
+      print 'Haystack:', haystack
+      print '\n\n\n\n'
+  print 'Needle found at index: %d' % guessIndex
   print 'Number of guesses required: %d' % guessCounter
+  return needle
 
 def search_exhaustively(needle, haystack):
   match = False
